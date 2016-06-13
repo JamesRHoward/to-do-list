@@ -1,16 +1,41 @@
-/*This file is for your custom js.  All yours*/
+// Business logic
+function toDoItem(item, details){
+  this.itemToDo = item;
+  this.itemDetails = details;
 
-// Calls input from form-input.html
+}
 
+
+// UI logic
 $(document).ready(function(){
-
-  $("#input").submit(function(event){
+  $("#new-item").submit(function(event){
     event.preventDefault();
-    var input = ($("#blank").val());
 
-    var output = "";
+    var inputtedItem = $("#new-to-do").val();
+    var inputtedDetail = $("#new-detail").val();
 
-    $('#output').text(output);
+
+    var newToDoItem = new toDoItem(inputtedItem, inputtedDetail);
+
+    $("#list").append("<li class='li-to-do'><span class='list-item'>" + newToDoItem.itemToDo + "</span><button type='remove' class='btn btn-remove'>Done?</button></li>");
+
+    $(".list-item").last().click(function(){
+      $("#show-to-do").show();
+      $("#show-to-do h2").text(newToDoItem.itemToDo);
+      $(".item").text(newToDoItem.itemToDo);
+      $(".detail").text(newToDoItem.itemDetails);
+
+
+   });
+   $(".btn-remove").click(function(){
+     $(this).parent().remove();
+     $("#show-to-do").hide();
+   });
+
+
+
+    $("#new-to-do").val("");
+    $("#new-detail").val("");
 
   });
 });
